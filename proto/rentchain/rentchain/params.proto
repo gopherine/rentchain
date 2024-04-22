@@ -1,0 +1,15 @@
+syntax = "proto3";
+package rentchain.rentchain;
+
+import "amino/amino.proto";
+import "gogoproto/gogo.proto";
+
+option go_package = "github.com/gopherine/rentchain/x/rentchain/types";
+
+// Params defines the parameters for the module.
+message Params {
+  option (amino.name) = "rentchain/x/rentchain/Params";
+  option (gogoproto.equal) = true;
+
+  
+}
