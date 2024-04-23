@@ -1,0 +1,17 @@
+syntax = "proto3";
+package rentchain.rentchain;
+
+option go_package = "github.com/gopherine/rentchain/x/rentchain/types";
+
+message RentalAgreement {
+  string index = 1; 
+  string itemId = 2; 
+  string ownerId = 3; 
+  string renterId = 4; 
+  string price = 5; 
+  string startTime = 6; 
+  string duration = 7; 
+  bool isActive = 8; 
+  string creator = 9;
+}
+

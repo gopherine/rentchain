@@ -16219,12 +16219,12 @@ paths:
               parameters.
       tags:
         - Msg
-  /rentchain.rentchain.Msg/UpdateParams:
+  /rentchain.assets.Msg/UpdateParams:
     post:
       summary: |-
         UpdateParams defines a (governance) operation for updating the module
         parameters. The authority defaults to the x/gov module account.
-      operationId: RentchainRentchainMsg_UpdateParams
+      operationId: RentchainAssetsMsg_UpdateParams
       responses:
         '200':
           description: A successful response.
@@ -16273,6 +16273,330 @@ paths:
                   NOTE: All parameters must be supplied.
                 type: object
             description: MsgUpdateParams is the Msg/UpdateParams request type.
+      tags:
+        - Msg
+  /gopherine/rentchain/assets/params:
+    get:
+      summary: Parameters queries the parameters of the module.
+      operationId: RentchainAssetsQuery_Params
+      responses:
+        '200':
+          description: A successful response.
+          schema:
+            type: object
+            properties:
+              params:
+                description: params holds all the parameters of this module.
+                type: object
+            description: >-
+              QueryParamsResponse is response type for the Query/Params RPC
+              method.
+        default:
+          description: An unexpected error response.
+          schema:
+            type: object
+            properties:
+              code:
+                type: integer
+                format: int32
+              message:
+                type: string
+              details:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    '@type':
+                      type: string
+                  additionalProperties: {}
+      tags:
+        - Query
+  /rentchain.rentchain.Msg/CompleteRental:
+    post:
+      operationId: RentchainRentchainMsg_CompleteRental
+      responses:
+        '200':
+          description: A successful response.
+          schema:
+            type: object
+        default:
+          description: An unexpected error response.
+          schema:
+            type: object
+            properties:
+              code:
+                type: integer
+                format: int32
+              message:
+                type: string
+              details:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    '@type':
+                      type: string
+                  additionalProperties: {}
+      parameters:
+        - name: body
+          in: body
+          required: true
+          schema:
+            type: object
+            properties:
+              creator:
+                type: string
+              ownerId:
+                type: string
+              itemId:
+                type: string
+      tags:
+        - Msg
+  /rentchain.rentchain.Msg/CreateRental:
+    post:
+      operationId: RentchainRentchainMsg_CreateRental
+      responses:
+        '200':
+          description: A successful response.
+          schema:
+            type: object
+        default:
+          description: An unexpected error response.
+          schema:
+            type: object
+            properties:
+              code:
+                type: integer
+                format: int32
+              message:
+                type: string
+              details:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    '@type':
+                      type: string
+                  additionalProperties: {}
+      parameters:
+        - name: body
+          in: body
+          required: true
+          schema:
+            type: object
+            properties:
+              creator:
+                type: string
+              itemId:
+                type: string
+              ownerId:
+                type: string
+              renterId:
+                type: string
+              price:
+                type: string
+              startTime:
+                type: string
+              duration:
+                type: string
+      tags:
+        - Msg
+  /rentchain.rentchain.Msg/CreateRentalAgreement:
+    post:
+      operationId: RentchainRentchainMsg_CreateRentalAgreement
+      responses:
+        '200':
+          description: A successful response.
+          schema:
+            type: object
+        default:
+          description: An unexpected error response.
+          schema:
+            type: object
+            properties:
+              code:
+                type: integer
+                format: int32
+              message:
+                type: string
+              details:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    '@type':
+                      type: string
+                  additionalProperties: {}
+      parameters:
+        - name: body
+          in: body
+          required: true
+          schema:
+            type: object
+            properties:
+              creator:
+                type: string
+              index:
+                type: string
+              itemId:
+                type: string
+              ownerId:
+                type: string
+              renterId:
+                type: string
+              price:
+                type: string
+              startTime:
+                type: string
+              duration:
+                type: string
+              isActive:
+                type: boolean
+      tags:
+        - Msg
+  /rentchain.rentchain.Msg/DeleteRentalAgreement:
+    post:
+      operationId: RentchainRentchainMsg_DeleteRentalAgreement
+      responses:
+        '200':
+          description: A successful response.
+          schema:
+            type: object
+        default:
+          description: An unexpected error response.
+          schema:
+            type: object
+            properties:
+              code:
+                type: integer
+                format: int32
+              message:
+                type: string
+              details:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    '@type':
+                      type: string
+                  additionalProperties: {}
+      parameters:
+        - name: body
+          in: body
+          required: true
+          schema:
+            type: object
+            properties:
+              creator:
+                type: string
+              index:
+                type: string
+      tags:
+        - Msg
+  /rentchain.rentchain.Msg/UpdateParams:
+    post:
+      summary: |-
+        UpdateParams defines a (governance) operation for updating the module
+        parameters. The authority defaults to the x/gov module account.
+      operationId: RentchainRentchainMsg_UpdateParams
+      responses:
+        '200':
+          description: A successful response.
+          schema:
+            type: object
+            description: >-
+              MsgUpdateParamsResponse defines the response structure for
+              executing a
+
+              MsgUpdateParams message.
+        default:
+          description: An unexpected error response.
+          schema:
+            type: object
+            properties:
+              code:
+                type: integer
+                format: int32
+              message:
+                type: string
+              details:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    '@type':
+                      type: string
+                  additionalProperties: {}
+      parameters:
+        - name: body
+          description: MsgUpdateParams is the Msg/UpdateParams request type.
+          in: body
+          required: true
+          schema:
+            type: object
+            properties:
+              authority:
+                type: string
+                description: >-
+                  authority is the address that controls the module (defaults to
+                  x/gov unless overwritten).
+              params:
+                description: 'NOTE: All parameters must be supplied.'
+                type: object
+            description: MsgUpdateParams is the Msg/UpdateParams request type.
+      tags:
+        - Msg
+  /rentchain.rentchain.Msg/UpdateRentalAgreement:
+    post:
+      operationId: RentchainRentchainMsg_UpdateRentalAgreement
+      responses:
+        '200':
+          description: A successful response.
+          schema:
+            type: object
+        default:
+          description: An unexpected error response.
+          schema:
+            type: object
+            properties:
+              code:
+                type: integer
+                format: int32
+              message:
+                type: string
+              details:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    '@type':
+                      type: string
+                  additionalProperties: {}
+      parameters:
+        - name: body
+          in: body
+          required: true
+          schema:
+            type: object
+            properties:
+              creator:
+                type: string
+              index:
+                type: string
+              itemId:
+                type: string
+              ownerId:
+                type: string
+              renterId:
+                type: string
+              price:
+                type: string
+              startTime:
+                type: string
+              duration:
+                type: string
+              isActive:
+                type: boolean
       tags:
         - Msg
 definitions:
@@ -22927,7 +23251,7 @@ definitions:
     description: |-
       Version defines the versioning scheme used to negotiate the IBC verison in
       the connection handshake.
-  rentchain.rentchain.MsgUpdateParams:
+  rentchain.assets.MsgUpdateParams:
     type: object
     properties:
       authority:
@@ -22942,11 +23266,123 @@ definitions:
           NOTE: All parameters must be supplied.
         type: object
     description: MsgUpdateParams is the Msg/UpdateParams request type.
+  rentchain.assets.MsgUpdateParamsResponse:
+    type: object
+    description: |-
+      MsgUpdateParamsResponse defines the response structure for executing a
+      MsgUpdateParams message.
+  rentchain.assets.Params:
+    type: object
+    description: Params defines the parameters for the module.
+  rentchain.assets.QueryParamsResponse:
+    type: object
+    properties:
+      params:
+        description: params holds all the parameters of this module.
+        type: object
+    description: QueryParamsResponse is response type for the Query/Params RPC method.
+  rentchain.rentchain.MsgCompleteRental:
+    type: object
+    properties:
+      creator:
+        type: string
+      ownerId:
+        type: string
+      itemId:
+        type: string
+  rentchain.rentchain.MsgCompleteRentalResponse:
+    type: object
+  rentchain.rentchain.MsgCreateRental:
+    type: object
+    properties:
+      creator:
+        type: string
+      itemId:
+        type: string
+      ownerId:
+        type: string
+      renterId:
+        type: string
+      price:
+        type: string
+      startTime:
+        type: string
+      duration:
+        type: string
+  rentchain.rentchain.MsgCreateRentalAgreement:
+    type: object
+    properties:
+      creator:
+        type: string
+      index:
+        type: string
+      itemId:
+        type: string
+      ownerId:
+        type: string
+      renterId:
+        type: string
+      price:
+        type: string
+      startTime:
+        type: string
+      duration:
+        type: string
+      isActive:
+        type: boolean
+  rentchain.rentchain.MsgCreateRentalAgreementResponse:
+    type: object
+  rentchain.rentchain.MsgCreateRentalResponse:
+    type: object
+  rentchain.rentchain.MsgDeleteRentalAgreement:
+    type: object
+    properties:
+      creator:
+        type: string
+      index:
+        type: string
+  rentchain.rentchain.MsgDeleteRentalAgreementResponse:
+    type: object
+  rentchain.rentchain.MsgUpdateParams:
+    type: object
+    properties:
+      authority:
+        type: string
+        description: >-
+          authority is the address that controls the module (defaults to x/gov
+          unless overwritten).
+      params:
+        description: 'NOTE: All parameters must be supplied.'
+        type: object
+    description: MsgUpdateParams is the Msg/UpdateParams request type.
   rentchain.rentchain.MsgUpdateParamsResponse:
     type: object
     description: |-
       MsgUpdateParamsResponse defines the response structure for executing a
       MsgUpdateParams message.
+  rentchain.rentchain.MsgUpdateRentalAgreement:
+    type: object
+    properties:
+      creator:
+        type: string
+      index:
+        type: string
+      itemId:
+        type: string
+      ownerId:
+        type: string
+      renterId:
+        type: string
+      price:
+        type: string
+      startTime:
+        type: string
+      duration:
+        type: string
+      isActive:
+        type: boolean
+  rentchain.rentchain.MsgUpdateRentalAgreementResponse:
+    type: object
   rentchain.rentchain.Params:
     type: object
     description: Params defines the parameters for the module.

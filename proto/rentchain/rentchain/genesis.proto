@@ -1,17 +1,19 @@
 syntax = "proto3";
+
 package rentchain.rentchain;
 
 import "amino/amino.proto";
 import "gogoproto/gogo.proto";
 import "rentchain/rentchain/params.proto";
+import "rentchain/rentchain/rental_agreement.proto";
 
 option go_package = "github.com/gopherine/rentchain/x/rentchain/types";
 
 // GenesisState defines the rentchain module's genesis state.
 message GenesisState {
+  
   // params defines all the parameters of the module.
-  Params params = 1 [
-    (gogoproto.nullable) = false,
-    (amino.dont_omitempty) = true
-  ];
+           Params          params              = 1 [(gogoproto.nullable) = false, (amino.dont_omitempty) = true];
+  repeated RentalAgreement rentalAgreementList = 2 [(gogoproto.nullable) = false] ;
 }
+

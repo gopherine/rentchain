@@ -8,7 +8,6 @@ package rentchain
 
 import (
 	context "context"
-
 	grpc "google.golang.org/grpc"
 	codes "google.golang.org/grpc/codes"
 	status "google.golang.org/grpc/status"
@@ -20,7 +19,12 @@ import (
 const _ = grpc.SupportPackageIsVersion7
 
 const (
-	Msg_UpdateParams_FullMethodName = "/rentchain.rentchain.Msg/UpdateParams"
+	Msg_UpdateParams_FullMethodName          = "/rentchain.rentchain.Msg/UpdateParams"
+	Msg_CreateRental_FullMethodName          = "/rentchain.rentchain.Msg/CreateRental"
+	Msg_CompleteRental_FullMethodName        = "/rentchain.rentchain.Msg/CompleteRental"
+	Msg_CreateRentalAgreement_FullMethodName = "/rentchain.rentchain.Msg/CreateRentalAgreement"
+	Msg_UpdateRentalAgreement_FullMethodName = "/rentchain.rentchain.Msg/UpdateRentalAgreement"
+	Msg_DeleteRentalAgreement_FullMethodName = "/rentchain.rentchain.Msg/DeleteRentalAgreement"
 )
 
 // MsgClient is the client API for Msg service.
@@ -30,6 +34,11 @@ type MsgClient interface {
 	// UpdateParams defines a (governance) operation for updating the module
 	// parameters. The authority defaults to the x/gov module account.
 	UpdateParams(ctx context.Context, in *MsgUpdateParams, opts ...grpc.CallOption) (*MsgUpdateParamsResponse, error)
+	CreateRental(ctx context.Context, in *MsgCreateRental, opts ...grpc.CallOption) (*MsgCreateRentalResponse, error)
+	CompleteRental(ctx context.Context, in *MsgCompleteRental, opts ...grpc.CallOption) (*MsgCompleteRentalResponse, error)
+	CreateRentalAgreement(ctx context.Context, in *MsgCreateRentalAgreement, opts ...grpc.CallOption) (*MsgCreateRentalAgreementResponse, error)
+	UpdateRentalAgreement(ctx context.Context, in *MsgUpdateRentalAgreement, opts ...grpc.CallOption) (*MsgUpdateRentalAgreementResponse, error)
+	DeleteRentalAgreement(ctx context.Context, in *MsgDeleteRentalAgreement, opts ...grpc.CallOption) (*MsgDeleteRentalAgreementResponse, error)
 }
 
 type msgClient struct {
@@ -49,6 +58,51 @@ func (c *msgClient) UpdateParams(ctx context.Context, in *MsgUpdateParams, opts 
 	return out, nil
 }
 
+func (c *msgClient) CreateRental(ctx context.Context, in *MsgCreateRental, opts ...grpc.CallOption) (*MsgCreateRentalResponse, error) {
+	out := new(MsgCreateRentalResponse)
+	err := c.cc.Invoke(ctx, Msg_CreateRental_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *msgClient) CompleteRental(ctx context.Context, in *MsgCompleteRental, opts ...grpc.CallOption) (*MsgCompleteRentalResponse, error) {
+	out := new(MsgCompleteRentalResponse)
+	err := c.cc.Invoke(ctx, Msg_CompleteRental_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *msgClient) CreateRentalAgreement(ctx context.Context, in *MsgCreateRentalAgreement, opts ...grpc.CallOption) (*MsgCreateRentalAgreementResponse, error) {
+	out := new(MsgCreateRentalAgreementResponse)
+	err := c.cc.Invoke(ctx, Msg_CreateRentalAgreement_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *msgClient) UpdateRentalAgreement(ctx context.Context, in *MsgUpdateRentalAgreement, opts ...grpc.CallOption) (*MsgUpdateRentalAgreementResponse, error) {
+	out := new(MsgUpdateRentalAgreementResponse)
+	err := c.cc.Invoke(ctx, Msg_UpdateRentalAgreement_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *msgClient) DeleteRentalAgreement(ctx context.Context, in *MsgDeleteRentalAgreement, opts ...grpc.CallOption) (*MsgDeleteRentalAgreementResponse, error) {
+	out := new(MsgDeleteRentalAgreementResponse)
+	err := c.cc.Invoke(ctx, Msg_DeleteRentalAgreement_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // MsgServer is the server API for Msg service.
 // All implementations must embed UnimplementedMsgServer
 // for forward compatibility
@@ -56,6 +110,11 @@ type MsgServer interface {
 	// UpdateParams defines a (governance) operation for updating the module
 	// parameters. The authority defaults to the x/gov module account.
 	UpdateParams(context.Context, *MsgUpdateParams) (*MsgUpdateParamsResponse, error)
+	CreateRental(context.Context, *MsgCreateRental) (*MsgCreateRentalResponse, error)
+	CompleteRental(context.Context, *MsgCompleteRental) (*MsgCompleteRentalResponse, error)
+	CreateRentalAgreement(context.Context, *MsgCreateRentalAgreement) (*MsgCreateRentalAgreementResponse, error)
+	UpdateRentalAgreement(context.Context, *MsgUpdateRentalAgreement) (*MsgUpdateRentalAgreementResponse, error)
+	DeleteRentalAgreement(context.Context, *MsgDeleteRentalAgreement) (*MsgDeleteRentalAgreementResponse, error)
 	mustEmbedUnimplementedMsgServer()
 }
 
@@ -65,6 +124,21 @@ type UnimplementedMsgServer struct {
 
 func (UnimplementedMsgServer) UpdateParams(context.Context, *MsgUpdateParams) (*MsgUpdateParamsResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UpdateParams not implemented")
+}
+func (UnimplementedMsgServer) CreateRental(context.Context, *MsgCreateRental) (*MsgCreateRentalResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CreateRental not implemented")
+}
+func (UnimplementedMsgServer) CompleteRental(context.Context, *MsgCompleteRental) (*MsgCompleteRentalResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CompleteRental not implemented")
+}
+func (UnimplementedMsgServer) CreateRentalAgreement(context.Context, *MsgCreateRentalAgreement) (*MsgCreateRentalAgreementResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CreateRentalAgreement not implemented")
+}
+func (UnimplementedMsgServer) UpdateRentalAgreement(context.Context, *MsgUpdateRentalAgreement) (*MsgUpdateRentalAgreementResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UpdateRentalAgreement not implemented")
+}
+func (UnimplementedMsgServer) DeleteRentalAgreement(context.Context, *MsgDeleteRentalAgreement) (*MsgDeleteRentalAgreementResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method DeleteRentalAgreement not implemented")
 }
 func (UnimplementedMsgServer) mustEmbedUnimplementedMsgServer() {}
 
@@ -97,6 +171,96 @@ func _Msg_UpdateParams_Handler(srv interface{}, ctx context.Context, dec func(in
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Msg_CreateRental_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(MsgCreateRental)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(MsgServer).CreateRental(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Msg_CreateRental_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(MsgServer).CreateRental(ctx, req.(*MsgCreateRental))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Msg_CompleteRental_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(MsgCompleteRental)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(MsgServer).CompleteRental(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Msg_CompleteRental_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(MsgServer).CompleteRental(ctx, req.(*MsgCompleteRental))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Msg_CreateRentalAgreement_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(MsgCreateRentalAgreement)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(MsgServer).CreateRentalAgreement(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Msg_CreateRentalAgreement_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(MsgServer).CreateRentalAgreement(ctx, req.(*MsgCreateRentalAgreement))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Msg_UpdateRentalAgreement_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(MsgUpdateRentalAgreement)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(MsgServer).UpdateRentalAgreement(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Msg_UpdateRentalAgreement_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(MsgServer).UpdateRentalAgreement(ctx, req.(*MsgUpdateRentalAgreement))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Msg_DeleteRentalAgreement_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(MsgDeleteRentalAgreement)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(MsgServer).DeleteRentalAgreement(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Msg_DeleteRentalAgreement_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(MsgServer).DeleteRentalAgreement(ctx, req.(*MsgDeleteRentalAgreement))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Msg_ServiceDesc is the grpc.ServiceDesc for Msg service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -107,6 +271,26 @@ var Msg_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "UpdateParams",
 			Handler:    _Msg_UpdateParams_Handler,
+		},
+		{
+			MethodName: "CreateRental",
+			Handler:    _Msg_CreateRental_Handler,
+		},
+		{
+			MethodName: "CompleteRental",
+			Handler:    _Msg_CompleteRental_Handler,
+		},
+		{
+			MethodName: "CreateRentalAgreement",
+			Handler:    _Msg_CreateRentalAgreement_Handler,
+		},
+		{
+			MethodName: "UpdateRentalAgreement",
+			Handler:    _Msg_UpdateRentalAgreement_Handler,
+		},
+		{
+			MethodName: "DeleteRentalAgreement",
+			Handler:    _Msg_DeleteRentalAgreement_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

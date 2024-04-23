@@ -8,7 +8,6 @@ package rentchain
 
 import (
 	context "context"
-
 	grpc "google.golang.org/grpc"
 	codes "google.golang.org/grpc/codes"
 	status "google.golang.org/grpc/status"
@@ -20,7 +19,9 @@ import (
 const _ = grpc.SupportPackageIsVersion7
 
 const (
-	Query_Params_FullMethodName = "/rentchain.rentchain.Query/Params"
+	Query_Params_FullMethodName             = "/rentchain.rentchain.Query/Params"
+	Query_RentalAgreement_FullMethodName    = "/rentchain.rentchain.Query/RentalAgreement"
+	Query_RentalAgreementAll_FullMethodName = "/rentchain.rentchain.Query/RentalAgreementAll"
 )
 
 // QueryClient is the client API for Query service.
@@ -29,6 +30,9 @@ const (
 type QueryClient interface {
 	// Parameters queries the parameters of the module.
 	Params(ctx context.Context, in *QueryParamsRequest, opts ...grpc.CallOption) (*QueryParamsResponse, error)
+	// Queries a list of RentalAgreement items.
+	RentalAgreement(ctx context.Context, in *QueryGetRentalAgreementRequest, opts ...grpc.CallOption) (*QueryGetRentalAgreementResponse, error)
+	RentalAgreementAll(ctx context.Context, in *QueryAllRentalAgreementRequest, opts ...grpc.CallOption) (*QueryAllRentalAgreementResponse, error)
 }
 
 type queryClient struct {
@@ -48,12 +52,33 @@ func (c *queryClient) Params(ctx context.Context, in *QueryParamsRequest, opts .
 	return out, nil
 }
 
+func (c *queryClient) RentalAgreement(ctx context.Context, in *QueryGetRentalAgreementRequest, opts ...grpc.CallOption) (*QueryGetRentalAgreementResponse, error) {
+	out := new(QueryGetRentalAgreementResponse)
+	err := c.cc.Invoke(ctx, Query_RentalAgreement_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *queryClient) RentalAgreementAll(ctx context.Context, in *QueryAllRentalAgreementRequest, opts ...grpc.CallOption) (*QueryAllRentalAgreementResponse, error) {
+	out := new(QueryAllRentalAgreementResponse)
+	err := c.cc.Invoke(ctx, Query_RentalAgreementAll_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // QueryServer is the server API for Query service.
 // All implementations must embed UnimplementedQueryServer
 // for forward compatibility
 type QueryServer interface {
 	// Parameters queries the parameters of the module.
 	Params(context.Context, *QueryParamsRequest) (*QueryParamsResponse, error)
+	// Queries a list of RentalAgreement items.
+	RentalAgreement(context.Context, *QueryGetRentalAgreementRequest) (*QueryGetRentalAgreementResponse, error)
+	RentalAgreementAll(context.Context, *QueryAllRentalAgreementRequest) (*QueryAllRentalAgreementResponse, error)
 	mustEmbedUnimplementedQueryServer()
 }
 
@@ -63,6 +88,12 @@ type UnimplementedQueryServer struct {
 
 func (UnimplementedQueryServer) Params(context.Context, *QueryParamsRequest) (*QueryParamsResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Params not implemented")
+}
+func (UnimplementedQueryServer) RentalAgreement(context.Context, *QueryGetRentalAgreementRequest) (*QueryGetRentalAgreementResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method RentalAgreement not implemented")
+}
+func (UnimplementedQueryServer) RentalAgreementAll(context.Context, *QueryAllRentalAgreementRequest) (*QueryAllRentalAgreementResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method RentalAgreementAll not implemented")
 }
 func (UnimplementedQueryServer) mustEmbedUnimplementedQueryServer() {}
 
@@ -95,6 +126,42 @@ func _Query_Params_Handler(srv interface{}, ctx context.Context, dec func(interf
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Query_RentalAgreement_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(QueryGetRentalAgreementRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(QueryServer).RentalAgreement(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Query_RentalAgreement_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(QueryServer).RentalAgreement(ctx, req.(*QueryGetRentalAgreementRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Query_RentalAgreementAll_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(QueryAllRentalAgreementRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(QueryServer).RentalAgreementAll(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Query_RentalAgreementAll_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(QueryServer).RentalAgreementAll(ctx, req.(*QueryAllRentalAgreementRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Query_ServiceDesc is the grpc.ServiceDesc for Query service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -105,6 +172,14 @@ var Query_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "Params",
 			Handler:    _Query_Params_Handler,
+		},
+		{
+			MethodName: "RentalAgreement",
+			Handler:    _Query_RentalAgreement_Handler,
+		},
+		{
+			MethodName: "RentalAgreementAll",
+			Handler:    _Query_RentalAgreementAll_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

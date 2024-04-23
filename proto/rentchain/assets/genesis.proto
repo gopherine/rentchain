@@ -1,0 +1,17 @@
+syntax = "proto3";
+package rentchain.assets;
+
+import "amino/amino.proto";
+import "gogoproto/gogo.proto";
+import "rentchain/assets/params.proto";
+
+option go_package = "github.com/gopherine/rentchain/x/assets/types";
+
+// GenesisState defines the assets module's genesis state.
+message GenesisState {
+  // params defines all the parameters of the module.
+  Params params = 1 [
+    (gogoproto.nullable) = false,
+    (amino.dont_omitempty) = true
+  ];
+}

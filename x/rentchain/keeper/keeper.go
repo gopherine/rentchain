@@ -51,3 +51,12 @@ func (k Keeper) GetAuthority() string {
 func (k Keeper) Logger() log.Logger {
 	return k.logger.With("module", fmt.Sprintf("x/%s", types.ModuleName))
 }
+
+func (k Keeper) EmitStructuredEvent(ctx sdk.Context, event types.Event) {
+	// Creating an SDK event from your structured event
+	sdkEvent := sdk.NewEvent(event.Type)
+	for _, attr := range event.Attributes {
+		sdkEvent = sdkEvent.AppendAttributes(sdk.NewAttribute(attr.Key, attr.Value))
+	}
+	ctx.EventManager().EmitEvent(sdkEvent)
+}
