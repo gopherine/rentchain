@@ -1,0 +1,19 @@
+syntax = "proto3";
+package rentchain.assets;
+
+import "gogoproto/gogo.proto";
+import "google/protobuf/any.proto";
+
+option go_package = "github.com/gopherine/rentchain/x/assets/types";
+
+message Asset {
+  uint64 id = 1;
+  string owner = 2;
+  string name = 3; // General name or title of the asset
+  string description = 4; // Detailed description
+  google.protobuf.Any details = 5; // Flexible field to store asset-specific details
+  string pricePerUnit = 6; // Price per time unit or usage
+  string unit = 7; // Measurement unit for pricing (e.g., hour, day, per use)
+  repeated string tags = 8; // Tags to categorize and search assets
+  string creator = 9;
+}

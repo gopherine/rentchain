@@ -20,6 +20,9 @@ const _ = grpc.SupportPackageIsVersion7
 
 const (
 	Msg_UpdateParams_FullMethodName = "/rentchain.assets.Msg/UpdateParams"
+	Msg_CreateAsset_FullMethodName  = "/rentchain.assets.Msg/CreateAsset"
+	Msg_UpdateAsset_FullMethodName  = "/rentchain.assets.Msg/UpdateAsset"
+	Msg_DeleteAsset_FullMethodName  = "/rentchain.assets.Msg/DeleteAsset"
 )
 
 // MsgClient is the client API for Msg service.
@@ -29,6 +32,9 @@ type MsgClient interface {
 	// UpdateParams defines a (governance) operation for updating the module
 	// parameters. The authority defaults to the x/gov module account.
 	UpdateParams(ctx context.Context, in *MsgUpdateParams, opts ...grpc.CallOption) (*MsgUpdateParamsResponse, error)
+	CreateAsset(ctx context.Context, in *MsgCreateAsset, opts ...grpc.CallOption) (*MsgCreateAssetResponse, error)
+	UpdateAsset(ctx context.Context, in *MsgUpdateAsset, opts ...grpc.CallOption) (*MsgUpdateAssetResponse, error)
+	DeleteAsset(ctx context.Context, in *MsgDeleteAsset, opts ...grpc.CallOption) (*MsgDeleteAssetResponse, error)
 }
 
 type msgClient struct {
@@ -48,6 +54,33 @@ func (c *msgClient) UpdateParams(ctx context.Context, in *MsgUpdateParams, opts 
 	return out, nil
 }
 
+func (c *msgClient) CreateAsset(ctx context.Context, in *MsgCreateAsset, opts ...grpc.CallOption) (*MsgCreateAssetResponse, error) {
+	out := new(MsgCreateAssetResponse)
+	err := c.cc.Invoke(ctx, Msg_CreateAsset_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *msgClient) UpdateAsset(ctx context.Context, in *MsgUpdateAsset, opts ...grpc.CallOption) (*MsgUpdateAssetResponse, error) {
+	out := new(MsgUpdateAssetResponse)
+	err := c.cc.Invoke(ctx, Msg_UpdateAsset_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *msgClient) DeleteAsset(ctx context.Context, in *MsgDeleteAsset, opts ...grpc.CallOption) (*MsgDeleteAssetResponse, error) {
+	out := new(MsgDeleteAssetResponse)
+	err := c.cc.Invoke(ctx, Msg_DeleteAsset_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // MsgServer is the server API for Msg service.
 // All implementations must embed UnimplementedMsgServer
 // for forward compatibility
@@ -55,6 +88,9 @@ type MsgServer interface {
 	// UpdateParams defines a (governance) operation for updating the module
 	// parameters. The authority defaults to the x/gov module account.
 	UpdateParams(context.Context, *MsgUpdateParams) (*MsgUpdateParamsResponse, error)
+	CreateAsset(context.Context, *MsgCreateAsset) (*MsgCreateAssetResponse, error)
+	UpdateAsset(context.Context, *MsgUpdateAsset) (*MsgUpdateAssetResponse, error)
+	DeleteAsset(context.Context, *MsgDeleteAsset) (*MsgDeleteAssetResponse, error)
 	mustEmbedUnimplementedMsgServer()
 }
 
@@ -64,6 +100,15 @@ type UnimplementedMsgServer struct {
 
 func (UnimplementedMsgServer) UpdateParams(context.Context, *MsgUpdateParams) (*MsgUpdateParamsResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UpdateParams not implemented")
+}
+func (UnimplementedMsgServer) CreateAsset(context.Context, *MsgCreateAsset) (*MsgCreateAssetResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CreateAsset not implemented")
+}
+func (UnimplementedMsgServer) UpdateAsset(context.Context, *MsgUpdateAsset) (*MsgUpdateAssetResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UpdateAsset not implemented")
+}
+func (UnimplementedMsgServer) DeleteAsset(context.Context, *MsgDeleteAsset) (*MsgDeleteAssetResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method DeleteAsset not implemented")
 }
 func (UnimplementedMsgServer) mustEmbedUnimplementedMsgServer() {}
 
@@ -96,6 +141,60 @@ func _Msg_UpdateParams_Handler(srv interface{}, ctx context.Context, dec func(in
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Msg_CreateAsset_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(MsgCreateAsset)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(MsgServer).CreateAsset(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Msg_CreateAsset_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(MsgServer).CreateAsset(ctx, req.(*MsgCreateAsset))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Msg_UpdateAsset_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(MsgUpdateAsset)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(MsgServer).UpdateAsset(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Msg_UpdateAsset_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(MsgServer).UpdateAsset(ctx, req.(*MsgUpdateAsset))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Msg_DeleteAsset_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(MsgDeleteAsset)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(MsgServer).DeleteAsset(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Msg_DeleteAsset_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(MsgServer).DeleteAsset(ctx, req.(*MsgDeleteAsset))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Msg_ServiceDesc is the grpc.ServiceDesc for Msg service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -106,6 +205,18 @@ var Msg_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "UpdateParams",
 			Handler:    _Msg_UpdateParams_Handler,
+		},
+		{
+			MethodName: "CreateAsset",
+			Handler:    _Msg_CreateAsset_Handler,
+		},
+		{
+			MethodName: "UpdateAsset",
+			Handler:    _Msg_UpdateAsset_Handler,
+		},
+		{
+			MethodName: "DeleteAsset",
+			Handler:    _Msg_DeleteAsset_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
